@@ -34,8 +34,8 @@ router.get("/:userid", async (req, res) => {
 router.post("/", async (req, res) => {
   const data = req.body;
 
-  const { username, email, id } = data;
-  const newUser = { username, email, id };
+  const { id, username, email } = data;
+  const newUser = { id, username, email };
 
   const fileContent = (await fs.readFile("./usersdummy.json")).toString();
   const users = JSON.parse(fileContent);
@@ -93,7 +93,7 @@ router.delete("/:id", async (req, res) => {
 
   const userToBeDeleted = users.find((user) => {
     if (user.id == id) {
-      return users.splice(id, 1);
+      return users.splice(Number(id), 1);
     }
   });
 
