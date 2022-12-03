@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const fs = require("fs/promises");
+const { resourceLimits } = require("worker_threads");
 //const express = require("express");
 
 const router = Router();
@@ -72,6 +73,7 @@ router.put("/:id", async (req, res) => {
     return id != item.id;
   });
   console.log("user: ", user);
+  //object.property    username <---- body of request
   user.username = username;
 
   newUsers.push(user);
@@ -83,5 +85,22 @@ router.put("/:id", async (req, res) => {
 });
 
 //Delete One User
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  const fileContent = (await fs.readFile("./usersdummy.json")).toString();
+  const users = JSON.parse(fileContent);
+
+  const userToBeDeleted = users.find((user) => {
+    if (user.id == id) {
+      return users.splice(id, 1);
+    }
+  });
+
+  //console.log(users);
+
+  await fs.writeFile("./usersdummy.json", JSON.stringify(users));
+  res.json({ ok: true, payload: userToBeDeleted });
+});
 
 module.exports = router;
