@@ -7,19 +7,17 @@ const router = Router();
 
 //GET All Users
 router.get("/", async (req, res) => {
-  const fileContent = await (await fs.readFile("./usersdummy.json")).toString();
+  const fileContent = (await fs.readFile("./usersdummy.json")).toString();
   const users = JSON.parse(fileContent);
 
-  // users = [
-  //   { id: 1, username: "jex", password: "123" },
-  //   { id: 2, username: "vanne", password: "342" },
-  //   { id: 3, username: "diego", password: "062" },
-  // ];
   res.json(users);
 });
 
 //Get One User
-router.get("/:userid", (req, res) => {
+router.get("/:userid", async (req, res) => {
+  const fileContent = (await fs.readFile("./usersdummy.json")).toString();
+  const users = JSON.parse(fileContent);
+
   const data = users.find((user) => {
     return user.id == req.params.userid;
   });
@@ -38,7 +36,7 @@ router.post("/", async (req, res) => {
   const { username, email, id } = data;
   const newUser = { username, email, id };
 
-  const fileContent = await (await fs.readFile("./usersdummy.json")).toString();
+  const fileContent = (await fs.readFile("./usersdummy.json")).toString();
   const users = JSON.parse(fileContent);
   users.push(newUser);
 
