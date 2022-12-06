@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const apiRouter = require("./src/routes");
-const { logErrors, errorHandler } = require("./src/middlewares/errorHandler");
+const { logError, errorHandler } = require("./src/middlewares/errorHandler");
 const config = require("./src/lib/config");
 const db = require("./src/lib/db");
 
 //app.use(express.json())
 apiRouter(app);
 //aqui abajo hay un error, app.use() requires a middleware function :c
-app.use(logErrors);
+app.use(logError);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
