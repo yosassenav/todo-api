@@ -7,6 +7,7 @@ const db = require("./src/lib/db");
 
 //app.use(express.json())
 apiRouter(app);
+//aqui abajo hay un error, app.use() requires a middleware function :c
 app.use(logErrors);
 app.use(errorHandler);
 
