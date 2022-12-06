@@ -1,22 +1,25 @@
 const express = require("express");
 const app = express();
 const apiRouter = require("./src/routes");
+const { logErrors, errorHandler } = require("./src/middlewares/errorHandler");
+const config = require("./src/lib/config");
+const db = require("./src/lib/db");
 
+//app.use(express.json())
 apiRouter(app);
+app.use(logErrors);
+app.use(errorHandler);
 
 app.get("/", (req, res) => {
-  console.log("Query Params", req.query);
-  console.log("Nombre", req.query.name);
-  console.log("Nombre de usuario", req.query.username);
-  console.log("Password", req.query.password);
-
-  data = {
-    name: req.query.name,
-    username: req.query.username,
-  };
-  res.json(data);
+  res.json({ message: "El API ya no funciona" });
 });
 
-app.listen(8000, () => {
-  console.log("Listening in port 8000");
+app.listen(config.app.port, async () => {
+  console.log(`Escuchando peticiones HTTP en el puerto ${config.app.port}`);
+  try {
+    await db.connect();
+    console.log("DB is connected :D");
+  } catch (error) {
+    console.error("Connection refused: ", error);
+  }
 });
