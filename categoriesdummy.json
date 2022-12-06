@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "category_name": "Drama"
+  },
+  {
+    "id": 2,
+    "category_name": "Animated"
+  },
+  {
+    "id": 3,
+    "category_name": "Action"
+  },
+  {
+    "id": 4,
+    "category_name": "Sci-Fi"
+  },
+  {
+    "id": 5,
+    "category_name": "Mystery"
+  },
+  {
+    "id": 6,
+    "category_name": "Family"
+  },
+  {
+    "id": 7,
+    "category_name": "Romance"
+  },
+  {
+    "id": 8,
+    "category_name": "Documentary"
+  },
+  {
+    "id": 9,
+    "category_name": "Horror"
+  },
+  {
+    "id": 10,
+    "category_name": "War"
+  }
+]
