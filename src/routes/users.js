@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const fs = require("fs/promises");
+const usersUseCases = require("../usecases/user");
 //const express = require("express");
 
 const router = Router();
@@ -31,25 +32,13 @@ router.get("/:userid", async (req, res) => {
 
 //Post One User (create)
 router.post("/", async (req, res) => {
-  const data = req.body;
+  const { name, password } = req.body;
 
-  const { id, username, email } = data;
-  const newUser = { id, username, email };
-
-  const fileContent = (await fs.readFile("./usersdummy.json")).toString();
-  const users = JSON.parse(fileContent);
-  users.push(newUser);
-
-  await fs.writeFile("./usersdummy.json", JSON.stringify(users));
-
-  if (!data) {
-    res.status(404).json({ message: "User data is required" });
-  } else {
-    res.status(201).json({
-      ok: true,
-      message: "User was created",
-      payload: newUser,
-    });
+  try {
+    const payload = await usersUseCases.create(name, password);
+    res.json({ ok: true, message: "User was created successfully!", payload });
+  } catch (error) {
+    res.status(400).json({ ok: false, message: error });
   }
 });
 
